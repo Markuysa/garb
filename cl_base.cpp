@@ -383,12 +383,12 @@ void cl_base::handler_m(string path, string message) {
 
 void cl_base::emit_connection(TYPE_SIGNAL p_signal, string& command) {
 	if (connections.size() == 0 || this->get_value() == 0) return; // Если вектор связей пуст или значение состояния объекта равно 0
-	this->signal_m(command);	
+	(this->*signal_m)(command);	
 	for (int i = 0; i < this->connections.size(); i++) {
 		if (connections.at(i)->pointer_signal == p_signal) {
 			if (connections.at(i)->obj_pointer->get_value() != 0)
 			{
-				this->handler_m(command); // Выполнение метода-обработчика
+				(this->*handler_m)(command); // Выполнение метода-обработчика
 			}
 		}
 	}
